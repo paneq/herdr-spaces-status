@@ -1,0 +1,7 @@
+Spaces Status
+
+mods/spaces-status/main.js is derived from the `spaces` mod shipped with the
+Herdr desktop app (https://github.com/herdrdev/herdr-app), licensed under the
+Apache License, Version 2.0. Modified by Robert Pankowecki in 2026 to read
+agent status files and show each space's agent state, background tasks and
+loops.
