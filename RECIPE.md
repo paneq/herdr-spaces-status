@@ -26,9 +26,9 @@ Everything the shipped `spaces` mod shows, unchanged: colored avatar, name, repo
 
 - A clone of the shipped `spaces` mod (`herdr-app do mod.clone '{"name":"spaces","as":"spaces-status"}'`), placed in a layout of your own where the `spaces` block was (`"content": { "mod": "spaces-status" }`). It has no props.
 - Status files: `~/.maestro/_herdr_mod/<session-id>/agent-status.json` (`home()` + that path), one per Claude Code session, written by agent-status-json:
-  `{ v, session_id, cwd, state, event, updated_at, background_tasks: [{ id, type, status, description, command? }], loops: [{ id, schedule, recurring, prompt }] }`.
+  `{ v, session_id, maestro_session_id?, cwd, state, event, updated_at, background_tasks: [{ id, type, status, description, command? }], loops: [{ id, schedule, recurring, prompt }] }`.
 - Reading: `exec("sh", ["-c", …])` cats every `*/agent-status.json` in one call, separated by `\x1e`, and parses each; `watchFolder` on the status folder wakes it; `cx.timer.every(10000, …)` is the fallback.
-- Matching a space to a session: a space whose `folder` ends in `-<8 hex>` matches the session whose `session_id` starts with those 8 characters (Maestro names its workspaces this way); any other space matches by `cwd === folder`. The newest `updated_at` wins; spaces on other machines are skipped.
+- Matching a space to a session: a space whose `folder` ends in `-<8 hex>` matches the file whose `maestro_session_id` (or, when absent, `session_id`) starts with those 8 characters (Maestro names its workspaces this way; a resumed Claude conversation gets a new `session_id`, so the Maestro one comes first); any other space matches by `cwd === folder`. The newest `updated_at` wins; spaces on other machines are skipped.
 - `herdr` functions: the shipped mod's, plus `home`. Programs it runs beyond the shipped mod's `git` and `hc`: `sh`.
 
 ## Watch out

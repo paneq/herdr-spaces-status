@@ -22,7 +22,7 @@ It works for agents Herdr can't see on its own, such as Claude Code running in t
 
 ## How it matches spaces to sessions
 
-A space whose folder ends in `-<8 hex characters>` (how Maestro names its session workspaces) matches the session whose id starts with them. Any other space matches the session whose working directory is the space's folder.
+A space whose folder ends in `-<8 hex characters>` (how Maestro names its session workspaces) matches the session whose Maestro session id starts with them (the Claude Code mod records `MAESTRO_SESSION_ID`, which stays the same when a conversation is resumed). Any other space matches the session whose working directory is the space's folder.
 
 ## What it runs
 

@@ -235,11 +235,13 @@ export default class Spaces extends View {
     });
   }
 
-  // A Maestro space's folder ends in its session id's first 8 characters; any other space matches by folder.
+  // A Maestro space's folder ends in its Maestro session id's first 8 characters; a resumed Claude
+  // conversation has a new id, so the Maestro one is preferred. Any other space matches by folder.
   statusOf(w) {
     if (w.machine) return null;
     const id = SESSION_ID.exec(w.folder ?? "")?.[1];
-    const mine = this.statuses.filter(s => s.state !== "ended" && (id ? s.session_id?.startsWith(id) : s.cwd === w.folder));
+    const matches = (s) => id ? (s.maestro_session_id ?? s.session_id)?.startsWith(id) : s.cwd === w.folder;
+    const mine = this.statuses.filter(s => s.state !== "ended" && matches(s));
     return mine.sort((a, b) => (b.updated_at ?? "").localeCompare(a.updated_at ?? ""))[0] ?? null;
   }
 
