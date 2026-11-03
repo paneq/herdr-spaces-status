@@ -24,6 +24,15 @@ function every(schedule) {
   return schedule;
 }
 
+// How long an idle agent has been idle: "now", "12m", "5h", "3d".
+function ago(iso) {
+  const min = Math.floor((Date.now() - Date.parse(iso ?? "")) / 60000);
+  if (!(min >= 1)) return "now";
+  if (min < 60) return `${min}m`;
+  if (min < 1440) return `${Math.floor(min / 60)}h`;
+  return `${Math.floor(min / 1440)}d`;
+}
+
 const TASK_ICON = { shell: "$", subagent: "\u21b3", monitor: "\u25c9", workflow: "\u2699" };
 
 function find(node, id) {
@@ -246,7 +255,8 @@ export default class Spaces extends View {
   }
 
   stateMark(s, t) {
-    if (!s || s.state === "idle") return div();
+    if (!s) return div();
+    if (s.state === "idle") return div().flex_none().text_size(11).text_color(t.dim).child(ago(s.updated_at));
     const color = s.state === "working" ? t.working : s.state === "blocked" ? t.blocked : t.ansi1;
     return div().flex_none().text_size(11).text_color(color ?? t.dim).child(s.state);
   }

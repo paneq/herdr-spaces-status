@@ -1,10 +1,12 @@
 # Spaces Status
 
-A [Herdr](https://herdr.dev) mod: the Spaces list, plus what the coding agent in each space is doing. After a space's name it shows `working`, `blocked` or `error`, and under it the agent's background shells, subagents and loops. Click a row to see the full command or prompt.
+A [Herdr](https://herdr.dev) mod: the Spaces list, plus what the coding agent in each space is doing. After a space's name it shows `working`, `blocked` or `error`, or for an idle agent how long it has been idle (`12m`, `5h`, `3d`), and under it the agent's background shells, subagents and loops. Click a row to see the full command or prompt.
 
 ![Spaces Status](preview.png)
 
 It works for agents Herdr can't see on its own, such as Claude Code running in tmux inside a Docker container. The data comes from the [agent-status-json](https://github.com/paneq/agent-status-json) Claude Code mod, which writes `~/.maestro/_herdr_mod/<session-id>/agent-status.json`.
+
+To open bash in a space's container from the tab bar, see [herdr-maestro-tabs](https://github.com/paneq/herdr-maestro-tabs).
 
 ## Install
 

@@ -8,7 +8,7 @@ Herdr's Spaces list, plus what the coding agent in each space is doing: a state 
 
 Everything the shipped `spaces` mod shows, unchanged: colored avatar, name, repo, branch, ahead/behind, machine groups, worktrees under their checkout. On top of that:
 
-- **State after the name.** At the row's right end, after the git tail: `working` in the theme's `working` color, `blocked` in its `blocked` color, `error` in `ansi1`. Nothing for `idle`.
+- **State after the name.** At the row's right end, after the git tail: `working` in the theme's `working` color, `blocked` in its `blocked` color, `error` in `ansi1`. For `idle`, how long ago the last turn ended, dim: `now`, `12m`, `5h`, `3d`.
 - **Rows under the space, 20px tall, indented 35px, 11.5px text, dim.** Each row has a 12px icon column and one truncated line:
   - `$` shell, `↳` subagent, `◉` monitor, `⚙` workflow, in the theme's `working` color, followed by the task's description (the short sentence the agent gave the tool call), or its command when there is no description.
   - `⟳` loop, in `ansi4`, followed by the schedule in words and the prompt: `every 5m · check CI on my PR`. `*/N * * * *` reads `every Nm`, `M */N * * *` reads `every Nh`, any other cron is shown as written.
