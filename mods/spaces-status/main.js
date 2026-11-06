@@ -246,10 +246,13 @@ export default class Spaces extends View {
 
   // A Maestro space's folder ends in its Maestro session id's first 8 characters; a resumed Claude
   // conversation has a new id, so the Maestro one is preferred. Any other space matches by folder.
-  statusOf(w) {
+  // The folder is where the space is now, not where it was made: a space opened from a Maestro
+  // space inherits that space's folder, and would otherwise show that session's agent.
+  statusOf(w, ps = panes()) {
     if (w.machine) return null;
-    const id = SESSION_ID.exec(w.folder ?? "")?.[1];
-    const matches = (s) => id ? (s.maestro_session_id ?? s.session_id)?.startsWith(id) : s.cwd === w.folder;
+    const folder = place(w, ps);
+    const id = SESSION_ID.exec(folder ?? "")?.[1];
+    const matches = (s) => id ? (s.maestro_session_id ?? s.session_id)?.startsWith(id) : s.cwd === folder;
     const mine = this.statuses.filter(s => s.state !== "ended" && matches(s));
     return mine.sort((a, b) => (b.updated_at ?? "").localeCompare(a.updated_at ?? ""))[0] ?? null;
   }
